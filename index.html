@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ウェブ保守費用 削減診断</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body {
+  font-family: 'Noto Sans JP', sans-serif;
+  background: #f0f4f8;
+  color: #333;
+  min-height: 100vh;
+}
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+.header {
+  background: linear-gradient(135deg, #223670, #1a2a5e);
+  color: white;
+  padding: 30px 20px;
+  border-radius: 16px;
+  text-align: center;
+  margin-bottom: 24px;
+}
+.header h1 {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  line-height: 1.4;
+}
+.header p {
+  font-size: 13px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+.card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.card h2 {
+  font-size: 16px;
+  font-weight: 700;
+  color: #223670;
+  margin-bottom: 16px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid #D0A900;
+}
+.input-group {
+  margin-bottom: 16px;
+}
+.input-group label {
+  display: block;
+  font-size: 13px;
+  font-weight: 600;
+  color: #555;
+  margin-bottom: 6px;
+}
+.input-group input[type="number"] {
+  width: 100%;
+  padding: 12px 16px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #223670;
+  outline: none;
+  transition: border-color 0.2s;
+}
+.input-group input[type="number"]:focus {
+  border-color: #223670;
+}
+.unit {
+  font-size: 13px;
+  color: #888;
+  margin-top: 4px;
+}
+.check-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.check-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.check-item:hover {
+  border-color: #223670;
+  background: #f8f9ff;
+}
+.check-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #223670;
+  cursor: pointer;
+}
+.check-item span {
+  font-size: 14px;
+  font-weight: 500;
+}
+.btn-diagnose {
+  width: 100%;
+  padding: 18px;
+  background: linear-gradient(135deg, #D0A900, #b8940a);
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+  box-shadow: 0 4px 15px rgba(208,169,0,0.4);
+}
+.btn-diagnose:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(208,169,0,0.5);
+}
+.result-section {
+  display: none;
+}
+.result-hero {
+  background: linear-gradient(135deg, #223670, #1a2a5e);
+  color: white;
+  border-radius: 16px;
+  padding: 30px 24px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.result-hero .label {
+  font-size: 13px;
+  opacity: 0.8;
+  margin-bottom: 8px;
+}
+.result-hero .big-number {
+  font-size: 48px;
+  font-weight: 700;
+  color: #D0A900;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.result-hero .sub {
+  font-size: 14px;
+  opacity: 0.9;
+}
+.result-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.result-box {
+  background: white;
+  border-radius: 12px;
+  padding: 18px;
+  text-align: center;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.result-box .box-label {
+  font-size: 11px;
+  color: #888;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+.result-box .box-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: #223670;
+}
+.result-box .box-sub {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 3px;
+}
+.impact-card {
+  background: white;
+  border-radius: 16px;
+  padding: 24px;
+  margin-bottom: 20px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.impact-card h3 {
+  font-size: 15px;
+  font-weight: 700;
+  color: #223670;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.compare-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+  padding: 12px;
+  background: #f8f9ff;
+  border-radius: 10px;
+}
+.compare-row .compare-label {
+  font-size: 12px;
+  color: #666;
+  font-weight: 600;
+}
+.compare-row .compare-before {
+  font-size: 14px;
+  color: #e74c3c;
+  font-weight: 700;
+  text-decoration: line-through;
+}
+.compare-row .arrow {
+  font-size: 18px;
+  color: #D0A900;
+}
+.compare-row .compare-after {
+  font-size: 16px;
+  color: #27ae60;
+  font-weight: 700;
+}
+.free-badge {
+  background: linear-gradient(135deg, #e74c3c, #c0392b);
+  color: white;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.free-badge .badge-label {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+.free-badge .badge-main {
+  font-size: 20px;
+  font-weight: 700;
+}
+.free-badge .badge-sub {
+  font-size: 13px;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+.btn-line {
+  display: block;
+  width: 100%;
+  padding: 18px;
+  background: #06C755;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: 700;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(6,199,85,0.4);
+  transition: transform 0.2s;
+  margin-bottom: 12px;
+}
+.btn-line:hover {
+  transform: translateY(-2px);
+}
+.btn-reset {
+  width: 100%;
+  padding: 14px;
+  background: #f0f0f0;
+  color: #666;
+  border: none;
+  border-radius: 12px;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  margin-bottom: 20px;
+}
+.footer {
+  text-align: center;
+  font-size: 11px;
+  color: #aaa;
+  padding-bottom: 30px;
+}
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>ウェブ保守費用<br>削減診断</h1>
+    <p>現在の保守費用を入力するだけで<br>削減シミュレーションを自動計算します</p>
+  </div>
+  <div class="input-section">
+    <div class="card">
+      <h2>STEP 1｜現在の月額保守費用</h2>
+      <div class="input-group">
+        <label>月額費用（円）</label>
+        <input type="number" id="currentFee" placeholder="例：30000" min="0">
+        <div class="unit">半角数字で入力してください</div>
+      </div>
+    </div>
+<div class="card">
+  <h2>STEP 2｜現在の保守内容</h2>
+  <div class="check-list">
+    <label class="check-item">
+      <input type="checkbox" value="サーバー・ドメイン管理">
+      <span>🖥️ サーバー・ドメイン管理</span>
+    </label>
+    <label class="check-item">
+      <input type="checkbox" value="WordPressの更新作業">
+      <span>🔄 WordPressの更新作業</span>
+    </label>
+    <label class="check-item">
+      <input type="checkbox" value="ページ修正・追加">
+      <span>✏️ ページ修正・追加</span>
+    </label>
+    <label class="check-item">
+      <input type="checkbox" value="セキュリティ対応">
+      <span>🔒 セキュリティ対応</span>
+    </label>
+    <label class="check-item">
+      <input type="checkbox" value="問い合わせ対応">
+      <span>📩 問い合わせ対応</span>
+    </label>
+  </div>
+</div>
+
+<button class="btn-diagnose" onclick="diagnose()">✨ 削減シミュレーションを見る</button>
+  </div>
+  <div class="result-section" id="resultSection">
+<div class="result-hero">
+  <div class="label">合計お得額（年間節約＋初期制作費）</div>
+  <div class="big-number" id="totalSaving">¥0</div>
+  <div class="sub">あなたが今すぐ得られる金額です</div>
+</div>
+
+<div class="result-grid">
+  <div class="result-box">
+    <div class="box-label">月額削減額</div>
+    <div class="box-value" id="monthSaving">¥0</div>
+    <div class="box-sub">毎月の節約</div>
+  </div>
+  <div class="result-box">
+    <div class="box-label">年間節約額</div>
+    <div class="box-value" id="yearSaving">¥0</div>
+    <div class="box-sub">1年間の節約</div>
+  </div>
+</div>
+
+<div class="impact-card">
+  <h3>📊 費用比較</h3>
+  <div class="compare-row">
+    <div class="compare-label">月額保守費用</div>
+    <div class="compare-before" id="beforeFee">¥0</div>
+    <div class="arrow">→</div>
+    <div class="compare-after">¥20,000</div>
+  </div>
+  <div class="compare-row">
+    <div class="compare-label">初期制作費</div>
+    <div class="compare-before">¥300,000</div>
+    <div class="arrow">→</div>
+    <div class="compare-after">¥0</div>
+  </div>
+</div>
+
+<div class="free-badge">
+  <div class="badge-label">🎁 スペシャル特典</div>
+  <div class="badge-main">サイトリニューアル 初期制作費 無料</div>
+  <div class="badge-sub">通常30万円のところ → 今なら0円でご提供</div>
+</div>
+
+<div class="impact-card">
+  <h3>✅ 引き続き対応する保守内容</h3>
+  <div id="checkedItems"></div>
+</div>
+
+<a href="https://lin.ee/qTviu03" class="btn-line" target="_blank">
+  💬 LINEで無料相談する
+</a>
+
+<button class="btn-reset" onclick="reset()">🔄 もう一度診断する</button>
+  </div>
+  <div class="footer">
+    Smile Plus Consulting｜Web保守費用削減診断ツール
+  </div>
+</div>
+<script>
+function diagnose() {
+  const fee = parseInt(document.getElementById('currentFee').value);
+  if (!fee || fee <= 0) {
+    alert('月額費用を入力してください');
+    return;
+  }
+
+  const spcFee = 20000;
+  const monthSaving = fee - spcFee;
+  const yearSaving = monthSaving * 12;
+  const initFree = 300000;
+  const total = yearSaving + initFree;
+
+  if (monthSaving <= 0) {
+    alert('現在の費用がSPCプランより低い場合、このツールは対象外となります。\n詳しくはLINEでご相談ください。');
+    return;
+  }
+
+  document.getElementById('totalSaving').textContent = '¥' + total.toLocaleString();
+  document.getElementById('monthSaving').textContent = '¥' + monthSaving.toLocaleString();
+  document.getElementById('yearSaving').textContent = '¥' + yearSaving.toLocaleString();
+  document.getElementById('beforeFee').textContent = '¥' + fee.toLocaleString();
+
+  const checks = document.querySelectorAll('.check-item input:checked');
+  const itemsDiv = document.getElementById('checkedItems');
+  if (checks.length === 0) {
+    itemsDiv.innerHTML = '<p style="font-size:13px;color:#aaa;">保守内容が選択されていません</p>';
+  } else {
+    let html = '';
+    checks.forEach(c => {
+      html += '<div style="padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;">✅ ' + c.value + '</div>';
+    });
+    itemsDiv.innerHTML = html;
+  }
+
+  document.querySelector('.input-section').style.display = 'none';
+  document.getElementById('resultSection').style.display = 'block';
+  window.scrollTo(0, 0);
+}
+
+function reset() {
+  document.getElementById('currentFee').value = '';
+  document.querySelectorAll('.check-item input').forEach(c => c.checked = false);
+  document.querySelector('.input-section').style.display = 'block';
+  document.getElementById('resultSection').style.display = 'none';
+  window.scrollTo(0, 0);
+}
+</script>
+</body>
+</html>
