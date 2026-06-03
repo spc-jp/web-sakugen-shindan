@@ -64,24 +64,37 @@ body {
   color: #555;
   margin-bottom: 6px;
 }
-.input-group input[type="number"] {
+.input-group input[type="text"] {
   width: 100%;
   padding: 12px 16px;
   border: 2px solid #e0e0e0;
   border-radius: 10px;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   color: #223670;
   outline: none;
   transition: border-color 0.2s;
+  text-align: right;
+  letter-spacing: 1px;
 }
-.input-group input[type="number"]:focus {
+.input-group input[type="text"]:focus {
   border-color: #223670;
+}
+.input-suffix {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.input-suffix span {
+  font-size: 20px;
+  font-weight: 700;
+  color: #223670;
+  white-space: nowrap;
 }
 .unit {
   font-size: 13px;
   color: #888;
-  margin-top: 4px;
+  margin-top: 6px;
 }
 .check-list {
   display: flex;
@@ -324,8 +337,11 @@ body {
       <h2>STEP 1｜現在の月額保守費用</h2>
       <div class="input-group">
         <label>月額費用（円）</label>
-        <input type="number" id="currentFee" placeholder="例：30000" min="0">
-        <div class="unit">半角数字で入力してください</div>
+        <div class="input-suffix">
+          <input type="text" id="currentFee" placeholder="例：30,000" inputmode="numeric" maxlength="10">
+          <span>円</span>
+        </div>
+        <div class="unit">数字を入力するとカンマが自動で入ります</div>
       </div>
       <div class="alert-box" id="alertBox">
         ⚠️ 現在の月額保守費用が6,000円未満の場合、削減提案が難しいケースがあります。<br>
@@ -426,7 +442,7 @@ const planTable = [
   { threshold: 10000, renewalFee: 600000,  newMonthly: 10000 },
   { threshold: 15000, renewalFee: 700000,  newMonthly: 15000 },
   { threshold: 20000, renewalFee: 1300000, newMonthly: 20000 },
-  { threshold: 30000, renewalFee: 1500000, newMonthly: 20000 },
+  { threshold: 99999999, renewalFee: 1500000, newMonthly: 20000 },
 ];
 
 function getPlan(fee) {
@@ -438,8 +454,28 @@ function getPlan(fee) {
   return planTable[planTable.length - 1];
 }
 
+function formatComma(val) {
+  return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+}
+
+function getRawValue(str) {
+  return parseInt(str.replace(/,/g, '')) || 0;
+}
+
+const feeInput = document.getElementById('currentFee');
+
+feeInput.addEventListener('input', function () {
+  let raw = this.value.replace(/[^0-9]/g, '');
+  if (raw === '') {
+    this.value = '';
+    return;
+  }
+  let num = parseInt(raw);
+  this.value = formatComma(num);
+});
+
 function diagnose() {
-  const fee = parseInt(document.getElementById('currentFee').value);
+  const fee = getRawValue(feeInput.value);
   const alertBox = document.getElementById('alertBox');
 
   if (!fee || fee <= 0) {
@@ -459,16 +495,16 @@ function diagnose() {
   const yearSaving = monthSaving * 12;
   const total = yearSaving + plan.renewalFee;
 
-  document.getElementById('totalSaving').textContent = '¥' + total.toLocaleString();
-  document.getElementById('monthSaving').textContent = monthSaving > 0 ? '¥' + monthSaving.toLocaleString() : '±¥0';
-  document.getElementById('yearSaving').textContent = yearSaving > 0 ? '¥' + yearSaving.toLocaleString() : '±¥0';
-  document.getElementById('beforeFee').textContent = '¥' + fee.toLocaleString();
-  document.getElementById('afterFee').textContent = '¥' + plan.newMonthly.toLocaleString();
-  document.getElementById('beforeInit').textContent = '¥' + plan.renewalFee.toLocaleString();
-  document.getElementById('badgeSub').textContent = '通常' + (plan.renewalFee / 10000) + '万円のところ → 今なら0円でご提供';
+  document.getElementById('totalSaving').textContent = '¥' + formatComma(total);
+  document.getElementById('monthSaving').textContent = monthSaving > 0 ? '¥' + formatComma(monthSaving) : '±¥0';
+  document.getElementById('yearSaving').textContent = yearSaving > 0 ? '¥' + formatComma(yearSaving) : '±¥0';
+  document.getElementById('beforeFee').textContent = '¥' + formatComma(fee);
+  document.getElementById('afterFee').textContent = '¥' + formatComma(plan.newMonthly);
+  document.getElementById('beforeInit').textContent = '¥' + formatComma(plan.renewalFee);
+  document.getElementById('badgeSub').textContent = '通常' + formatComma(plan.renewalFee) + '円のところ → 今なら0円でご提供';
   document.getElementById('planNote').textContent =
-    '📋 適用プラン：月額保守 ¥' + plan.newMonthly.toLocaleString() +
-    '　リニューアル費 ¥' + plan.renewalFee.toLocaleString() + ' → ¥0';
+    '📋 適用プラン：月額保守 ¥' + formatComma(plan.newMonthly) +
+    '　リニューアル費 ¥' + formatComma(plan.renewalFee) + ' → ¥0';
 
   const checks = document.querySelectorAll('.check-item input:checked');
   const itemsDiv = document.getElementById('checkedItems');
@@ -488,7 +524,7 @@ function diagnose() {
 }
 
 function reset() {
-  document.getElementById('currentFee').value = '';
+  feeInput.value = '';
   document.getElementById('alertBox').style.display = 'none';
   document.querySelectorAll('.check-item input').forEach(c => c.checked = false);
   document.querySelector('.input-section').style.display = 'block';
