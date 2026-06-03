@@ -250,6 +250,18 @@ body {
   opacity: 0.9;
   margin-top: 4px;
 }
+.plan-note {
+  background: #f0f4ff;
+  border: 2px solid #223670;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 14px;
+  color: #223670;
+  font-weight: 600;
+  line-height: 1.8;
+}
 .btn-line {
   display: block;
   width: 100%;
@@ -316,7 +328,7 @@ body {
         <div class="unit">半角数字で入力してください</div>
       </div>
       <div class="alert-box" id="alertBox">
-        ⚠️ 現在の月額保守費用が6,000円以下の場合、削減提案が難しいケースがあります。<br>
+        ⚠️ 現在の月額保守費用が6,000円未満の場合、削減提案が難しいケースがあります。<br>
         詳しくはLINEでご相談ください。
       </div>
     </div>
@@ -374,11 +386,11 @@ body {
     <div class="compare-label">月額保守費用</div>
     <div class="compare-before" id="beforeFee">¥0</div>
     <div class="arrow">→</div>
-    <div class="compare-after">¥6,000</div>
+    <div class="compare-after" id="afterFee">¥0</div>
   </div>
   <div class="compare-row">
     <div class="compare-label">初期制作費</div>
-    <div class="compare-before">¥300,000</div>
+    <div class="compare-before" id="beforeInit">¥0</div>
     <div class="arrow">→</div>
     <div class="compare-after">¥0</div>
   </div>
@@ -387,8 +399,10 @@ body {
 <div class="free-badge">
   <div class="badge-label">🎁 スペシャル特典</div>
   <div class="badge-main">サイトリニューアル 初期制作費 無料</div>
-  <div class="badge-sub">通常30万円のところ → 今なら0円でご提供</div>
+  <div class="badge-sub" id="badgeSub">通常○○万円のところ → 今なら0円でご提供</div>
 </div>
+
+<div class="plan-note" id="planNote"></div>
 
 <div class="impact-card">
   <h3>✅ 引き続き対応する保守内容</h3>
@@ -406,6 +420,24 @@ body {
   </div>
 </div>
 <script>
+const planTable = [
+  { threshold: 6000,  renewalFee: 300000,  newMonthly: 6000  },
+  { threshold: 8000,  renewalFee: 500000,  newMonthly: 8000  },
+  { threshold: 10000, renewalFee: 600000,  newMonthly: 10000 },
+  { threshold: 15000, renewalFee: 700000,  newMonthly: 15000 },
+  { threshold: 20000, renewalFee: 1300000, newMonthly: 20000 },
+  { threshold: 30000, renewalFee: 1500000, newMonthly: 20000 },
+];
+
+function getPlan(fee) {
+  for (let i = 0; i < planTable.length; i++) {
+    if (fee <= planTable[i].threshold) {
+      return planTable[i];
+    }
+  }
+  return planTable[planTable.length - 1];
+}
+
 function diagnose() {
   const fee = parseInt(document.getElementById('currentFee').value);
   const alertBox = document.getElementById('alertBox');
@@ -415,23 +447,28 @@ function diagnose() {
     return;
   }
 
-  if (fee <= 6000) {
+  if (fee < 6000) {
     alertBox.style.display = 'block';
     return;
   }
 
   alertBox.style.display = 'none';
 
-  const spcFee = 6000;
-  const monthSaving = fee - spcFee;
+  const plan = getPlan(fee);
+  const monthSaving = fee - plan.newMonthly;
   const yearSaving = monthSaving * 12;
-  const initFree = 300000;
-  const total = yearSaving + initFree;
+  const total = yearSaving + plan.renewalFee;
 
   document.getElementById('totalSaving').textContent = '¥' + total.toLocaleString();
-  document.getElementById('monthSaving').textContent = '¥' + monthSaving.toLocaleString();
-  document.getElementById('yearSaving').textContent = '¥' + yearSaving.toLocaleString();
+  document.getElementById('monthSaving').textContent = monthSaving > 0 ? '¥' + monthSaving.toLocaleString() : '±¥0';
+  document.getElementById('yearSaving').textContent = yearSaving > 0 ? '¥' + yearSaving.toLocaleString() : '±¥0';
   document.getElementById('beforeFee').textContent = '¥' + fee.toLocaleString();
+  document.getElementById('afterFee').textContent = '¥' + plan.newMonthly.toLocaleString();
+  document.getElementById('beforeInit').textContent = '¥' + plan.renewalFee.toLocaleString();
+  document.getElementById('badgeSub').textContent = '通常' + (plan.renewalFee / 10000) + '万円のところ → 今なら0円でご提供';
+  document.getElementById('planNote').textContent =
+    '📋 適用プラン：月額保守 ¥' + plan.newMonthly.toLocaleString() +
+    '　リニューアル費 ¥' + plan.renewalFee.toLocaleString() + ' → ¥0';
 
   const checks = document.querySelectorAll('.check-item input:checked');
   const itemsDiv = document.getElementById('checkedItems');
