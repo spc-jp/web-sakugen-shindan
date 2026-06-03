@@ -6,6 +6,7 @@
 <title>ウェブ保守費用 削減診断</title>
 <link rel="icon" type="image/png" href="https://spc-jp.github.io/web-sakugen-shindan/favicon.png">
 <link rel="apple-touch-icon" href="https://spc-jp.github.io/web-sakugen-shindan/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 * { margin: 0; padding: 0; box-sizing: border-box; }
 body {
@@ -287,8 +288,18 @@ body {
   color: #aaa;
   padding-bottom: 30px;
 }
+.alert-box {
+  background: #fff3cd;
+  border: 2px solid #D0A900;
+  border-radius: 12px;
+  padding: 16px;
+  font-size: 13px;
+  color: #856404;
+  line-height: 1.6;
+  margin-bottom: 16px;
+  display: none;
+}
 </style>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
 <div class="container">
@@ -303,6 +314,10 @@ body {
         <label>月額費用（円）</label>
         <input type="number" id="currentFee" placeholder="例：30000" min="0">
         <div class="unit">半角数字で入力してください</div>
+      </div>
+      <div class="alert-box" id="alertBox">
+        ⚠️ 現在の月額保守費用が6,000円以下の場合、削減提案が難しいケースがあります。<br>
+        詳しくはLINEでご相談ください。
       </div>
     </div>
 <div class="card">
@@ -359,7 +374,7 @@ body {
     <div class="compare-label">月額保守費用</div>
     <div class="compare-before" id="beforeFee">¥0</div>
     <div class="arrow">→</div>
-    <div class="compare-after">¥20,000</div>
+    <div class="compare-after">¥6,000</div>
   </div>
   <div class="compare-row">
     <div class="compare-label">初期制作費</div>
@@ -393,21 +408,25 @@ body {
 <script>
 function diagnose() {
   const fee = parseInt(document.getElementById('currentFee').value);
+  const alertBox = document.getElementById('alertBox');
+
   if (!fee || fee <= 0) {
     alert('月額費用を入力してください');
     return;
   }
 
-  const spcFee = 20000;
+  if (fee <= 6000) {
+    alertBox.style.display = 'block';
+    return;
+  }
+
+  alertBox.style.display = 'none';
+
+  const spcFee = 6000;
   const monthSaving = fee - spcFee;
   const yearSaving = monthSaving * 12;
   const initFree = 300000;
   const total = yearSaving + initFree;
-
-  if (monthSaving <= 0) {
-    alert('現在の費用がSPCプランより低い場合、このツールは対象外となります。\n詳しくはLINEでご相談ください。');
-    return;
-  }
 
   document.getElementById('totalSaving').textContent = '¥' + total.toLocaleString();
   document.getElementById('monthSaving').textContent = '¥' + monthSaving.toLocaleString();
@@ -433,6 +452,7 @@ function diagnose() {
 
 function reset() {
   document.getElementById('currentFee').value = '';
+  document.getElementById('alertBox').style.display = 'none';
   document.querySelectorAll('.check-item input').forEach(c => c.checked = false);
   document.querySelector('.input-section').style.display = 'block';
   document.getElementById('resultSection').style.display = 'none';
