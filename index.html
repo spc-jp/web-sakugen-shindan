@@ -17,716 +17,511 @@
 <meta name="twitter:image" content="https://spc-jp.github.io/web-sakugen-shindan/ogp.png">
 <link rel="icon" type="image/png" href="https://spc-jp.github.io/web-sakugen-shindan/favicon.png">
 <link rel="apple-touch-icon" href="https://spc-jp.github.io/web-sakugen-shindan/favicon.png">
-<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;600;700;900&display=swap" rel="stylesheet">
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body {
-  font-family: 'Noto Sans JP', sans-serif;
-  background: #f0f4f8;
-  color: #333;
-  min-height: 100vh;
-}
-.container {
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-}
-.header {
-  background: linear-gradient(135deg, #223670, #1a2a5e);
-  color: white;
-  padding: 30px 20px;
-  border-radius: 16px;
-  text-align: center;
-  margin-bottom: 24px;
-}
-.header h1 {
-  font-size: 22px;
-  font-weight: 700;
-  margin-bottom: 8px;
-  line-height: 1.4;
-}
-.header p {
-  font-size: 13px;
-  opacity: 0.85;
-  line-height: 1.6;
-}
-.card {
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
-.card h2 {
-  font-size: 16px;
-  font-weight: 700;
-  color: #223670;
-  margin-bottom: 16px;
-  padding-bottom: 10px;
-  border-bottom: 2px solid #D0A900;
-}
-.input-group {
-  margin-bottom: 16px;
-}
-.input-group label {
-  display: block;
-  font-size: 13px;
-  font-weight: 600;
-  color: #555;
-  margin-bottom: 6px;
-}
-.input-group input[type="text"] {
-  width: 100%;
-  padding: 12px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  font-size: 22px;
-  font-weight: 700;
-  color: #223670;
-  outline: none;
-  transition: border-color 0.2s;
-  text-align: right;
-  letter-spacing: 1px;
-}
-.input-group input[type="text"]:focus {
-  border-color: #223670;
-}
-.input-suffix {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-.input-suffix span {
-  font-size: 20px;
-  font-weight: 700;
-  color: #223670;
-  white-space: nowrap;
-}
-.unit {
-  font-size: 13px;
-  color: #888;
-  margin-top: 6px;
-}
-.radio-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.radio-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.radio-item:hover {
-  border-color: #223670;
-  background: #f8f9ff;
-}
-.radio-item input[type="radio"] {
-  width: 18px;
-  height: 18px;
-  accent-color: #223670;
-  cursor: pointer;
-}
-.radio-item.selected {
-  border-color: #223670;
-  background: #f0f4ff;
-}
-.radio-item span {
-  font-size: 14px;
-  font-weight: 500;
-  flex: 1;
-}
-.radio-item .price-hint {
-  font-size: 12px;
-  color: #888;
-  font-weight: 600;
-}
-.check-list {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-.check-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 12px 14px;
-  border: 2px solid #e0e0e0;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.check-item:hover {
-  border-color: #223670;
-  background: #f8f9ff;
-}
-.check-item input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: #223670;
-  cursor: pointer;
-}
-.check-item span {
-  font-size: 14px;
-  font-weight: 500;
-}
-.renewal-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  padding: 14px 16px;
-  border: 2px solid #D0A900;
-  border-radius: 10px;
-  cursor: pointer;
-  background: #fffdf0;
-  transition: all 0.2s;
-}
-.renewal-item:hover {
-  background: #fff8d0;
-}
-.renewal-item input[type="checkbox"] {
-  width: 20px;
-  height: 20px;
-  accent-color: #D0A900;
-  cursor: pointer;
-}
-.renewal-item span {
-  font-size: 14px;
-  font-weight: 600;
-  color: #856404;
-}
-.btn-diagnose {
-  width: 100%;
-  padding: 18px;
-  background: linear-gradient(135deg, #D0A900, #b8940a);
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 0.2s, box-shadow 0.2s;
-  box-shadow: 0 4px 15px rgba(208,169,0,0.4);
-}
-.btn-diagnose:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 6px 20px rgba(208,169,0,0.5);
-}
-.result-section {
-  display: none;
-}
-.result-hero {
-  background: linear-gradient(135deg, #223670, #1a2a5e);
-  color: white;
-  border-radius: 16px;
-  padding: 30px 24px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-.result-hero .label {
-  font-size: 13px;
-  opacity: 0.8;
-  margin-bottom: 8px;
-}
-.result-hero .big-number {
-  font-size: 48px;
-  font-weight: 700;
-  color: #D0A900;
-  line-height: 1;
-  margin-bottom: 4px;
-}
-.result-hero .sub {
-  font-size: 14px;
-  opacity: 0.9;
-}
-.result-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-.result-box {
-  background: white;
-  border-radius: 12px;
-  padding: 18px;
-  text-align: center;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
-.result-box .box-label {
-  font-size: 11px;
-  color: #888;
-  margin-bottom: 6px;
-  font-weight: 600;
-}
-.result-box .box-value {
-  font-size: 22px;
-  font-weight: 700;
-  color: #223670;
-}
-.result-box .box-sub {
-  font-size: 11px;
-  color: #aaa;
-  margin-top: 3px;
-}
-.impact-card {
-  background: white;
-  border-radius: 16px;
-  padding: 24px;
-  margin-bottom: 20px;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
-}
-.impact-card h3 {
-  font-size: 15px;
-  font-weight: 700;
-  color: #223670;
-  margin-bottom: 16px;
-  text-align: center;
-}
-.compare-row {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 12px;
-  padding: 12px;
-  background: #f8f9ff;
-  border-radius: 10px;
-}
-.compare-row .compare-label {
-  font-size: 12px;
-  color: #666;
-  font-weight: 600;
-}
-.compare-row .compare-before {
-  font-size: 14px;
-  color: #e74c3c;
-  font-weight: 700;
-  text-decoration: line-through;
-}
-.compare-row .arrow {
-  font-size: 18px;
-  color: #D0A900;
-}
-.compare-row .compare-after {
-  font-size: 16px;
-  color: #27ae60;
-  font-weight: 700;
-}
-.judge-box {
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 15px;
-  font-weight: 700;
-  line-height: 1.6;
-}
-.judge-box.high {
-  background: #fff0f0;
-  border: 2px solid #e74c3c;
-  color: #c0392b;
-}
-.judge-box.fair {
-  background: #f0fff4;
-  border: 2px solid #27ae60;
-  color: #1e8449;
-}
-.free-badge {
-  background: linear-gradient(135deg, #e74c3c, #c0392b);
-  color: white;
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-.free-badge .badge-label {
-  font-size: 12px;
-  opacity: 0.9;
-  margin-bottom: 4px;
-}
-.free-badge .badge-main {
-  font-size: 20px;
-  font-weight: 700;
-}
-.free-badge .badge-sub {
-  font-size: 13px;
-  opacity: 0.9;
-  margin-top: 4px;
-}
-.renewal-result {
-  background: linear-gradient(135deg, #D0A900, #b8940a);
-  color: white;
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  margin-bottom: 20px;
-}
-.renewal-result .r-label {
-  font-size: 12px;
-  opacity: 0.9;
-  margin-bottom: 4px;
-}
-.renewal-result .r-main {
-  font-size: 20px;
-  font-weight: 700;
-}
-.renewal-result .r-sub {
-  font-size: 13px;
-  opacity: 0.9;
-  margin-top: 4px;
-}
-.plan-note {
-  background: #f0f4ff;
-  border: 2px solid #223670;
-  border-radius: 12px;
-  padding: 16px;
-  text-align: center;
-  margin-bottom: 20px;
-  font-size: 14px;
-  color: #223670;
-  font-weight: 600;
-  line-height: 1.8;
-}
-.btn-line {
-  display: block;
-  width: 100%;
-  padding: 18px;
-  background: #06C755;
-  color: white;
-  border: none;
-  border-radius: 12px;
-  font-size: 18px;
-  font-weight: 700;
-  text-align: center;
-  text-decoration: none;
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(6,199,85,0.4);
-  transition: transform 0.2s;
-  margin-bottom: 12px;
-}
-.btn-line:hover {
-  transform: translateY(-2px);
-}
-.btn-reset {
-  width: 100%;
-  padding: 14px;
-  background: #f0f0f0;
-  color: #666;
-  border: none;
-  border-radius: 12px;
-  font-size: 15px;
-  font-weight: 600;
-  cursor: pointer;
-  margin-bottom: 20px;
-}
-.footer {
-  text-align: center;
-  font-size: 11px;
-  color: #aaa;
-  padding-bottom: 30px;
-}
-.alert-box {
-  background: #fff3cd;
-  border: 2px solid #D0A900;
-  border-radius: 12px;
-  padding: 16px;
-  font-size: 13px;
-  color: #856404;
-  line-height: 1.6;
-  margin-top: 10px;
-  display: none;
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans JP',sans-serif;background:#f0f4f8;color:#333;min-height:100vh;}
+.container{max-width:600px;margin:0 auto;padding:20px;}
+.header{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#0f1f4e 0%,#1a3a7c 40%,#223670 70%,#0d1b3e 100%);
+  border-radius:24px;padding:40px 24px 36px;
+  text-align:center;margin-bottom:28px;
+  box-shadow:0 8px 40px rgba(22,54,112,0.4);
+}
+.header::before{
+  content:'';position:absolute;top:-60px;right:-60px;
+  width:220px;height:220px;border-radius:50%;
+  background:radial-gradient(circle,rgba(208,169,0,0.18) 0%,transparent 70%);
+}
+.header::after{
+  content:'';position:absolute;bottom:-80px;left:-40px;
+  width:260px;height:260px;border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,0.05) 0%,transparent 70%);
+}
+.header-badge{
+  display:inline-block;
+  background:rgba(208,169,0,0.15);
+  border:1px solid rgba(208,169,0,0.5);
+  color:#D0A900;font-size:11px;font-weight:700;
+  padding:4px 14px;border-radius:20px;letter-spacing:1.5px;
+  margin-bottom:16px;
+}
+.header h1{
+  font-size:28px;font-weight:900;color:#fff;
+  line-height:1.3;margin-bottom:10px;
+  text-shadow:0 2px 12px rgba(0,0,0,0.3);
+  position:relative;z-index:1;
+}
+.header h1 em{
+  font-style:normal;color:#D0A900;
+  border-bottom:2px solid rgba(208,169,0,0.5);
+  padding-bottom:1px;
+}
+.header-sub{
+  font-size:13px;color:rgba(255,255,255,0.75);
+  line-height:1.7;margin-bottom:20px;
+  position:relative;z-index:1;
+}
+.header-stats{
+  display:flex;justify-content:center;gap:24px;
+  position:relative;z-index:1;
+}
+.header-stat{
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:12px;padding:10px 16px;text-align:center;
+}
+.header-stat .stat-num{font-size:20px;font-weight:900;color:#D0A900;line-height:1;}
+.header-stat .stat-label{font-size:10px;color:rgba(255,255,255,0.65);margin-top:3px;}
+.header-line{
+  width:40px;height:3px;
+  background:linear-gradient(90deg,#D0A900,#f0c800);
+  border-radius:2px;margin:14px auto 0;
+}
+.card{background:white;border-radius:18px;padding:24px;margin-bottom:20px;box-shadow:0 2px 16px rgba(0,0,0,0.07);}
+.card h2{
+  font-size:15px;font-weight:700;color:#223670;
+  margin-bottom:16px;padding-bottom:10px;
+  border-bottom:2px solid #D0A900;
+  display:flex;align-items:center;gap:8px;
+}
+.step-badge{
+  background:linear-gradient(135deg,#223670,#1a3a7c);
+  color:#D0A900;font-size:10px;font-weight:700;
+  padding:3px 8px;border-radius:6px;letter-spacing:0.5px;
+}
+.input-suffix{display:flex;align-items:center;gap:10px;}
+.input-suffix input{
+  flex:1;padding:14px 16px;
+  border:2px solid #e0e0e0;border-radius:12px;
+  font-size:24px;font-weight:700;color:#223670;
+  outline:none;text-align:right;letter-spacing:1px;
+  transition:border-color 0.2s,box-shadow 0.2s;
+}
+.input-suffix input:focus{border-color:#223670;box-shadow:0 0 0 3px rgba(34,54,112,0.1);}
+.input-suffix span{font-size:20px;font-weight:700;color:#223670;}
+.unit{font-size:12px;color:#aaa;margin-top:6px;}
+.radio-list{display:flex;flex-direction:column;gap:10px;}
+.radio-item{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 14px;border:2px solid #e8e8e8;
+  border-radius:12px;cursor:pointer;transition:all 0.2s;
+}
+.radio-item:hover{border-color:#223670;background:#f8f9ff;}
+.radio-item.selected{border-color:#223670;background:#f0f4ff;box-shadow:0 0 0 3px rgba(34,54,112,0.08);}
+.radio-item input[type=radio]{width:18px;height:18px;accent-color:#223670;cursor:pointer;}
+.radio-item span{font-size:14px;font-weight:500;flex:1;}
+.radio-item .price-hint{font-size:11px;color:#aaa;font-weight:600;background:#f5f5f5;padding:2px 8px;border-radius:6px;}
+.check-list{display:flex;flex-direction:column;gap:10px;}
+.check-item{
+  display:flex;align-items:center;gap:10px;
+  padding:12px 14px;border:2px solid #e8e8e8;
+  border-radius:12px;cursor:pointer;transition:all 0.2s;
+}
+.check-item:hover{border-color:#223670;background:#f8f9ff;}
+.check-item input[type=checkbox]{width:20px;height:20px;accent-color:#223670;cursor:pointer;}
+.check-item span{font-size:14px;font-weight:500;}
+.renewal-item{
+  display:flex;align-items:center;gap:10px;
+  padding:14px 16px;border:2px solid #D0A900;
+  border-radius:12px;cursor:pointer;
+  background:linear-gradient(135deg,#fffdf0,#fff9dc);transition:all 0.2s;
+}
+.renewal-item:hover{background:linear-gradient(135deg,#fff8d0,#fff3b0);}
+.renewal-item input[type=checkbox]{width:20px;height:20px;accent-color:#D0A900;cursor:pointer;}
+.renewal-item span{font-size:14px;font-weight:600;color:#856404;}
+.btn-diagnose{
+  width:100%;padding:20px;
+  background:linear-gradient(135deg,#D0A900,#e8c000,#D0A900);
+  background-size:200% 100%;
+  color:#fff;border:none;border-radius:14px;
+  font-size:18px;font-weight:700;cursor:pointer;
+  box-shadow:0 6px 24px rgba(208,169,0,0.45);
+  transition:all 0.3s;letter-spacing:0.5px;
+  position:relative;overflow:hidden;
+}
+.btn-diagnose::after{
+  content:'';position:absolute;top:0;left:-100%;
+  width:60%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.3),transparent);
+  transition:left 0.5s;
+}
+.btn-diagnose:hover{background-position:right center;transform:translateY(-2px);box-shadow:0 10px 30px rgba(208,169,0,0.55);}
+.btn-diagnose:hover::after{left:150%;}
+.loading-overlay{
+  display:none;position:fixed;top:0;left:0;width:100%;height:100%;
+  background:rgba(15,31,78,0.92);z-index:9999;
+  flex-direction:column;align-items:center;justify-content:center;
+  backdrop-filter:blur(4px);
+}
+.loading-overlay.show{display:flex;}
+.loading-icon{font-size:64px;margin-bottom:20px;animation:bounce 0.8s ease infinite alternate;}
+@keyframes bounce{from{transform:translateY(0) scale(1);}to{transform:translateY(-16px) scale(1.1);}}
+.loading-text{color:#fff;font-size:20px;font-weight:700;margin-bottom:8px;letter-spacing:1px;}
+.loading-sub{color:rgba(208,169,0,0.85);font-size:13px;}
+.loading-bar-wrap{width:220px;height:6px;background:rgba(255,255,255,0.15);border-radius:3px;margin-top:24px;overflow:hidden;}
+.loading-bar{height:100%;width:0%;border-radius:3px;background:linear-gradient(90deg,#D0A900,#f0c800);animation:loadBar 1.8s ease forwards;}
+@keyframes loadBar{0%{width:0%;}60%{width:80%;}100%{width:100%;}}
+.result-section{display:none;}
+.result-hero{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,#0f1f4e,#1a3a7c,#223670);
+  border-radius:24px;padding:36px 24px;
+  text-align:center;margin-bottom:20px;
+  box-shadow:0 8px 40px rgba(22,54,112,0.4);
+}
+.result-hero::before{
+  content:'';position:absolute;top:-40px;right:-40px;
+  width:180px;height:180px;border-radius:50%;
+  background:radial-gradient(circle,rgba(208,169,0,0.2) 0%,transparent 70%);
+}
+.result-hero .label{font-size:12px;color:rgba(255,255,255,0.7);margin-bottom:8px;letter-spacing:1px;}
+.result-hero .big-number{
+  font-size:56px;font-weight:900;color:#D0A900;
+  line-height:1;margin-bottom:6px;
+  text-shadow:0 0 30px rgba(208,169,0,0.5);
+  opacity:0;transform:scale(0.5);
+  transition:all 0.6s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.result-hero .big-number.show{opacity:1;transform:scale(1);}
+.result-hero .sub{font-size:14px;color:rgba(255,255,255,0.85);}
+.result-hero .confetti-line{
+  display:flex;justify-content:center;gap:8px;margin-top:14px;font-size:20px;
+  opacity:0;transition:opacity 0.5s 0.8s;
+}
+.result-hero .confetti-line.show{opacity:1;}
+.result-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:20px;}
+.result-box{
+  background:white;border-radius:16px;padding:20px;
+  text-align:center;box-shadow:0 2px 16px rgba(0,0,0,0.07);
+  opacity:0;transform:translateY(20px);
+  transition:all 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.result-box.show{opacity:1;transform:translateY(0);}
+.result-box .box-label{font-size:11px;color:#aaa;margin-bottom:6px;font-weight:600;letter-spacing:0.5px;}
+.result-box .box-value{font-size:24px;font-weight:900;color:#223670;}
+.result-box .box-sub{font-size:11px;color:#ccc;margin-top:4px;}
+.judge-box{
+  border-radius:14px;padding:16px;text-align:center;
+  margin-bottom:20px;font-size:14px;font-weight:700;line-height:1.6;
+  opacity:0;transform:translateX(-20px);
+  transition:all 0.5s 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.judge-box.show{opacity:1;transform:translateX(0);}
+.judge-box.high{background:#fff0f0;border:2px solid #e74c3c;color:#c0392b;}
+.judge-box.fair{background:#f0fff4;border:2px solid #27ae60;color:#1e8449;}
+.impact-card{
+  background:white;border-radius:18px;padding:24px;
+  margin-bottom:20px;box-shadow:0 2px 16px rgba(0,0,0,0.07);
+  opacity:0;transform:translateY(20px);
+  transition:all 0.5s 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.impact-card.show{opacity:1;transform:translateY(0);}
+.impact-card h3{font-size:15px;font-weight:700;color:#223670;margin-bottom:16px;text-align:center;}
+.compare-row{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-bottom:10px;padding:12px 14px;background:#f8f9ff;border-radius:12px;
+}
+.compare-label{font-size:12px;color:#888;font-weight:600;}
+.compare-before{font-size:13px;color:#e74c3c;font-weight:700;text-decoration:line-through;}
+.arrow{font-size:16px;color:#D0A900;}
+.compare-after{font-size:15px;color:#27ae60;font-weight:700;}
+.renewal-result{
+  background:linear-gradient(135deg,#D0A900,#b8940a);
+  color:white;border-radius:14px;padding:16px;
+  text-align:center;margin-bottom:20px;
+  opacity:0;transform:translateY(20px);
+  transition:all 0.5s 0.5s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.renewal-result.show{opacity:1;transform:translateY(0);}
+.renewal-result .r-label{font-size:12px;opacity:0.9;margin-bottom:4px;}
+.renewal-result .r-main{font-size:18px;font-weight:700;}
+.renewal-result .r-sub{font-size:12px;opacity:0.85;margin-top:4px;}
+.free-badge{
+  background:linear-gradient(135deg,#e74c3c,#c0392b);
+  color:white;border-radius:14px;padding:18px;
+  text-align:center;margin-bottom:20px;
+  box-shadow:0 4px 20px rgba(231,76,60,0.3);
+  opacity:0;transform:scale(0.95);
+  transition:all 0.5s 0.6s cubic-bezier(0.175,0.885,0.32,1.275);
+}
+.free-badge.show{opacity:1;transform:scale(1);}
+.free-badge .badge-label{font-size:12px;opacity:0.9;margin-bottom:4px;letter-spacing:1px;}
+.free-badge .badge-main{font-size:20px;font-weight:700;}
+.free-badge .badge-sub{font-size:13px;opacity:0.9;margin-top:5px;}
+.plan-note{
+  background:#f0f4ff;border:2px solid #223670;
+  border-radius:14px;padding:16px;text-align:center;
+  margin-bottom:20px;font-size:13px;color:#223670;
+  font-weight:600;line-height:1.9;
+  opacity:0;transition:opacity 0.5s 0.7s;
+}
+.plan-note.show{opacity:1;}
+.checked-card{
+  background:white;border-radius:18px;padding:24px;
+  margin-bottom:20px;box-shadow:0 2px 16px rgba(0,0,0,0.07);
+  opacity:0;transition:opacity 0.5s 0.8s;
+}
+.checked-card.show{opacity:1;}
+.checked-card h3{font-size:15px;font-weight:700;color:#223670;margin-bottom:14px;text-align:center;}
+.btn-line{
+  display:block;width:100%;padding:18px;
+  background:linear-gradient(135deg,#06C755,#04a344);
+  color:white;border:none;border-radius:14px;
+  font-size:18px;font-weight:700;text-align:center;
+  text-decoration:none;cursor:pointer;
+  box-shadow:0 6px 24px rgba(6,199,85,0.4);
+  margin-bottom:12px;
+  opacity:0;transform:translateY(20px);
+  transition:opacity 0.5s 0.9s,transform 0.5s 0.9s,box-shadow 0.3s;
+}
+.btn-line.show{opacity:1;transform:translateY(0);}
+.btn-line:hover{box-shadow:0 10px 30px rgba(6,199,85,0.55);transform:translateY(-2px);}
+.btn-reset{
+  width:100%;padding:14px;background:#f0f0f0;
+  color:#999;border:none;border-radius:14px;
+  font-size:14px;font-weight:600;cursor:pointer;
+  margin-bottom:24px;transition:background 0.2s;
+}
+.btn-reset:hover{background:#e0e0e0;}
+.footer{text-align:center;font-size:11px;color:#ccc;padding-bottom:30px;}
+.alert-box{
+  background:#fff3cd;border:2px solid #D0A900;
+  border-radius:12px;padding:14px;font-size:13px;
+  color:#856404;line-height:1.6;margin-top:10px;display:none;
+}
+.particle{
+  position:fixed;pointer-events:none;z-index:9998;
+  font-size:24px;animation:particleFly 1.5s ease-out forwards;
+}
+@keyframes particleFly{
+  0%{opacity:1;transform:translateY(0) scale(1);}
+  100%{opacity:0;transform:translateY(-200px) scale(0.3);}
 }
 </style>
 </head>
 <body>
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loading-icon">💰</div>
+  <div class="loading-text">削減額を計算中...</div>
+  <div class="loading-sub">あなたのお得額を算出しています</div>
+  <div class="loading-bar-wrap"><div class="loading-bar"></div></div>
+</div>
 <div class="container">
   <div class="header">
-    <h1>Web保守費用<br>削減診断</h1>
-    <p>現在の保守費用を入力するだけで<br>削減シミュレーションを自動計算します</p>
+    <div class="header-badge">✦ WEB MAINTENANCE COST DIAGNOSIS ✦</div>
+    <h1>Web保守費用<br><em>削減診断</em></h1>
+    <p class="header-sub">今の保守費用を入力するだけで<br>削減シミュレーションを自動計算します</p>
+    <div class="header-stats">
+      <div class="header-stat"><div class="stat-num">30秒</div><div class="stat-label">診断時間</div></div>
+      <div class="header-stat"><div class="stat-num">無料</div><div class="stat-label">初期制作費</div></div>
+      <div class="header-stat"><div class="stat-num">即日</div><div class="stat-label">お見積り</div></div>
+    </div>
+    <div class="header-line"></div>
   </div>
   <div class="input-section">
     <div class="card">
-      <h2>STEP 1｜現在の月額保守費用</h2>
-      <div class="input-group">
-        <label>月額費用（円）</label>
-        <div class="input-suffix">
-          <input type="text" id="currentFee" placeholder="例：30,000" inputmode="numeric" maxlength="10">
-          <span>円</span>
-        </div>
-        <div class="unit">数字を入力するとカンマが自動で入ります</div>
+      <h2><span class="step-badge">STEP 1</span>現在の月額保守費用</h2>
+      <div class="input-suffix">
+        <input type="text" id="currentFee" placeholder="例：30,000" inputmode="numeric" maxlength="10">
+        <span>円</span>
       </div>
+      <div class="unit">数字を入力するとカンマが自動で入ります</div>
       <div class="alert-box" id="alertBox">
-        ⚠️ 現在の月額保守費用が6,000円未満の場合、削減提案が難しいケースがあります。<br>
-        詳しくはLINEでご相談ください。
+        ⚠️ 現在の月額保守費用が6,000円未満の場合、削減提案が難しいケースがあります。詳しくはLINEでご相談ください。
       </div>
     </div>
-<div class="card">
-  <h2>STEP 2｜現在のサイトのページ数</h2>
-  <div class="radio-list">
-    <label class="radio-item">
-      <input type="radio" name="pageCount" value="5" data-monthly="3000" data-renewal="0">
-      <span>〜5ページ</span>
-      <span class="price-hint">目安：月3,000円</span>
-    </label>
-    <label class="radio-item">
-      <input type="radio" name="pageCount" value="10" data-monthly="5000" data-renewal="0">
-      <span>〜10ページ</span>
-      <span class="price-hint">目安：月5,000円</span>
-    </label>
-    <label class="radio-item">
-      <input type="radio" name="pageCount" value="20" data-monthly="10000" data-renewal="100000">
-      <span>〜20ページ</span>
-      <span class="price-hint">目安：月10,000円</span>
-    </label>
-    <label class="radio-item">
-      <input type="radio" name="pageCount" value="50" data-monthly="20000" data-renewal="300000">
-      <span>〜50ページ</span>
-      <span class="price-hint">目安：月20,000円</span>
-    </label>
-    <label class="radio-item">
-      <input type="radio" name="pageCount" value="99" data-monthly="30000" data-renewal="600000">
-      <span>それ以上</span>
-      <span class="price-hint">目安：月30,000円</span>
-    </label>
-  </div>
-</div>
-
-<div class="card">
-  <h2>STEP 3｜現在の保守内容</h2>
-  <div class="check-list">
-    <label class="check-item">
-      <input type="checkbox" value="サーバー・ドメイン管理">
-      <span>🖥️ サーバー・ドメイン管理</span>
-    </label>
-    <label class="check-item">
-      <input type="checkbox" value="WordPressの更新作業">
-      <span>🔄 WordPressの更新作業</span>
-    </label>
-    <label class="check-item">
-      <input type="checkbox" value="ページ修正・追加">
-      <span>✏️ ページ修正・追加</span>
-    </label>
-    <label class="check-item">
-      <input type="checkbox" value="セキュリティ対応">
-      <span>🔒 セキュリティ対応</span>
-    </label>
-    <label class="check-item">
-      <input type="checkbox" value="問い合わせ対応">
-      <span>📩 問い合わせ対応</span>
-    </label>
-  </div>
-</div>
-
-<div class="card">
-  <h2>STEP 4｜リニューアルのご検討</h2>
-  <label class="renewal-item">
-    <input type="checkbox" id="renewalCheck">
-    <span>🔁 サイトリニューアルも検討している</span>
-  </label>
-</div>
-
-<button class="btn-diagnose" onclick="diagnose()">✨ 削減シミュレーションを見る</button>
+    <div class="card">
+      <h2><span class="step-badge">STEP 2</span>現在のサイトのページ数</h2>
+      <div class="radio-list">
+        <label class="radio-item"><input type="radio" name="pageCount" value="5" data-monthly="3000" data-renewal="0"><span>〜5ページ</span><span class="price-hint">目安：月3,000円</span></label>
+        <label class="radio-item"><input type="radio" name="pageCount" value="10" data-monthly="5000" data-renewal="0"><span>〜10ページ</span><span class="price-hint">目安：月5,000円</span></label>
+        <label class="radio-item"><input type="radio" name="pageCount" value="20" data-monthly="10000" data-renewal="100000"><span>〜20ページ</span><span class="price-hint">目安：月10,000円</span></label>
+        <label class="radio-item"><input type="radio" name="pageCount" value="50" data-monthly="20000" data-renewal="300000"><span>〜50ページ</span><span class="price-hint">目安：月20,000円</span></label>
+        <label class="radio-item"><input type="radio" name="pageCount" value="99" data-monthly="30000" data-renewal="600000"><span>それ以上</span><span class="price-hint">目安：月30,000円</span></label>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="step-badge">STEP 3</span>現在の保守内容</h2>
+      <div class="check-list">
+        <label class="check-item"><input type="checkbox" value="サーバー・ドメイン管理"><span>🖥️ サーバー・ドメイン管理</span></label>
+        <label class="check-item"><input type="checkbox" value="WordPressの更新作業"><span>🔄 WordPressの更新作業</span></label>
+        <label class="check-item"><input type="checkbox" value="ページ修正・追加"><span>✏️ ページ修正・追加</span></label>
+        <label class="check-item"><input type="checkbox" value="セキュリティ対応"><span>🔒 セキュリティ対応</span></label>
+        <label class="check-item"><input type="checkbox" value="問い合わせ対応"><span>📩 問い合わせ対応</span></label>
+      </div>
+    </div>
+    <div class="card">
+      <h2><span class="step-badge">STEP 4</span>リニューアルのご検討</h2>
+      <label class="renewal-item">
+        <input type="checkbox" id="renewalCheck">
+        <span>🔁 サイトリニューアルも検討している</span>
+      </label>
+    </div>
+    <button class="btn-diagnose" onclick="startDiagnose()">✨ 削減シミュレーションを見る</button>
   </div>
   <div class="result-section" id="resultSection">
-<div class="result-hero">
-  <div class="label">合計お得額（年間節約＋初期制作費）</div>
-  <div class="big-number" id="totalSaving">¥0</div>
-  <div class="sub">あなたが今すぐ得られる金額です</div>
-</div>
-
-<div class="result-grid">
-  <div class="result-box">
-    <div class="box-label">月額削減額</div>
-    <div class="box-value" id="monthSaving">¥0</div>
-    <div class="box-sub">毎月の節約</div>
+    <div class="result-hero">
+      <div class="label">合計お得額（年間節約＋初期制作費）</div>
+      <div class="big-number" id="totalSaving">¥0</div>
+      <div class="sub">あなたが今すぐ得られる金額です</div>
+      <div class="confetti-line" id="confettiLine">🎉 🎊 💰 🎉 🎊</div>
+    </div>
+    <div class="result-grid">
+      <div class="result-box" id="box1"><div class="box-label">月額削減額</div><div class="box-value" id="monthSaving">¥0</div><div class="box-sub">毎月の節約</div></div>
+      <div class="result-box" id="box2"><div class="box-label">年間節約額</div><div class="box-value" id="yearSaving">¥0</div><div class="box-sub">1年間の節約</div></div>
+    </div>
+    <div class="judge-box" id="judgeBox"></div>
+    <div class="impact-card" id="impactCard">
+      <h3>📊 費用比較</h3>
+      <div class="compare-row"><div class="compare-label">現在の月額保守費用</div><div class="compare-before" id="beforeFee">¥0</div><div class="arrow">→</div><div class="compare-after" id="afterFee">¥0</div></div>
+      <div class="compare-row"><div class="compare-label">ページ数からみた目安</div><div style="font-size:13px;color:#223670;font-weight:700;" id="pageMonthlyCurrent"></div><div class="arrow">　</div><div style="font-size:13px;color:#223670;font-weight:700;" id="pageMonthlyHint"></div></div>
+      <div class="compare-row"><div class="compare-label">初期制作費</div><div class="compare-before" id="beforeInit">¥0</div><div class="arrow">→</div><div class="compare-after">¥0（特典）</div></div>
+    </div>
+    <div class="renewal-result" id="renewalResult" style="display:none;">
+      <div class="r-label">🔁 リニューアル概算費用</div>
+      <div class="r-main" id="renewalFeeText"></div>
+      <div class="r-sub" id="renewalSubText"></div>
+    </div>
+    <div class="free-badge" id="freeBadge">
+      <div class="badge-label">🎁 スペシャル特典</div>
+      <div class="badge-main">サイトリニューアル 初期制作費 無料</div>
+      <div class="badge-sub" id="badgeSub"></div>
+    </div>
+    <div class="plan-note" id="planNote"></div>
+    <div class="checked-card" id="checkedCard">
+      <h3>✅ 引き続き対応する保守内容</h3>
+      <div id="checkedItems"></div>
+    </div>
+    <a href="https://lin.ee/qTviu03" class="btn-line" id="btnLine" target="_blank">💬 LINEで無料相談する</a>
+    <button class="btn-reset" onclick="reset()">🔄 もう一度診断する</button>
   </div>
-  <div class="result-box">
-    <div class="box-label">年間節約額</div>
-    <div class="box-value" id="yearSaving">¥0</div>
-    <div class="box-sub">1年間の節約</div>
-  </div>
-</div>
-
-<div class="judge-box" id="judgeBox"></div>
-
-<div class="impact-card">
-  <h3>📊 費用比較</h3>
-  <div class="compare-row">
-    <div class="compare-label">現在の月額保守費用</div>
-    <div class="compare-before" id="beforeFee">¥0</div>
-    <div class="arrow">→</div>
-    <div class="compare-after" id="afterFee">¥0</div>
-  </div>
-  <div class="compare-row">
-    <div class="compare-label">ページ数からみた目安</div>
-    <div class="compare-before" id="pageMonthlyCurrent" style="text-decoration:none;color:#223670;"></div>
-    <div class="arrow">　</div>
-    <div class="compare-after" id="pageMonthlyHint" style="color:#223670;"></div>
-  </div>
-  <div class="compare-row">
-    <div class="compare-label">初期制作費</div>
-    <div class="compare-before" id="beforeInit">¥0</div>
-    <div class="arrow">→</div>
-    <div class="compare-after">¥0（特典）</div>
-  </div>
-</div>
-
-<div class="renewal-result" id="renewalResult" style="display:none;">
-  <div class="r-label">🔁 リニューアル概算費用</div>
-  <div class="r-main" id="renewalFeeText">¥0 → 今なら¥0</div>
-  <div class="r-sub" id="renewalSubText"></div>
-</div>
-
-<div class="free-badge">
-  <div class="badge-label">🎁 スペシャル特典</div>
-  <div class="badge-main">サイトリニューアル 初期制作費 無料</div>
-  <div class="badge-sub" id="badgeSub">通常○○円のところ → 今なら0円でご提供</div>
-</div>
-
-<div class="plan-note" id="planNote"></div>
-
-<div class="impact-card">
-  <h3>✅ 引き続き対応する保守内容</h3>
-  <div id="checkedItems"></div>
-</div>
-
-<a href="https://lin.ee/qTviu03" class="btn-line" target="_blank">
-  💬 LINEで無料相談する
-</a>
-
-<button class="btn-reset" onclick="reset()">🔄 もう一度診断する</button>
-  </div>
-  <div class="footer">
-    Smile Plus Consulting｜Web保守費用削減診断ツール
-  </div>
+  <div class="footer">Smile Plus Consulting｜Web保守費用削減診断ツール</div>
 </div>
 <script>
-const planTable = [
-  { threshold: 6000,     renewalFee: 300000,  newMonthly: 6000  },
-  { threshold: 8000,     renewalFee: 500000,  newMonthly: 8000  },
-  { threshold: 10000,    renewalFee: 600000,  newMonthly: 10000 },
-  { threshold: 15000,    renewalFee: 700000,  newMonthly: 15000 },
-  { threshold: 20000,    renewalFee: 1300000, newMonthly: 20000 },
-  { threshold: 99999999, renewalFee: 1500000, newMonthly: 20000 },
+const planTable=[
+  {threshold:6000,renewalFee:300000,newMonthly:6000},
+  {threshold:8000,renewalFee:500000,newMonthly:8000},
+  {threshold:10000,renewalFee:600000,newMonthly:10000},
+  {threshold:15000,renewalFee:700000,newMonthly:15000},
+  {threshold:20000,renewalFee:1300000,newMonthly:20000},
+  {threshold:99999999,renewalFee:1500000,newMonthly:20000},
 ];
-
-function getPlan(fee) {
-  for (let i = 0; i < planTable.length; i++) {
-    if (fee <= planTable[i].threshold) return planTable[i];
-  }
-  return planTable[planTable.length - 1];
-}
-
-function formatComma(val) {
-  return val.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
-}
-
-function getRawValue(str) {
-  return parseInt(str.replace(/,/g, '')) || 0;
-}
-
-const feeInput = document.getElementById('currentFee');
-feeInput.addEventListener('input', function () {
-  let raw = this.value.replace(/[^0-9]/g, '');
-  if (raw === '') { this.value = ''; return; }
-  this.value = formatComma(parseInt(raw));
+function getPlan(f){for(let i=0;i<planTable.length;i++){if(f<=planTable[i].threshold)return planTable[i];}return planTable[planTable.length-1];}
+function formatComma(v){return v.toString().replace(/\B(?=(\d{3})+(?!\d))/g,',');}
+function getRaw(s){return parseInt(s.replace(/,/g,''))||0;}
+const feeInput=document.getElementById('currentFee');
+feeInput.addEventListener('input',function(){
+  let raw=this.value.replace(/[^0-9]/g,'');
+  if(raw===''){this.value='';return;}
+  this.value=formatComma(parseInt(raw));
 });
-
-document.querySelectorAll('.radio-item').forEach(item => {
-  item.addEventListener('click', function () {
-    document.querySelectorAll('.radio-item').forEach(r => r.classList.remove('selected'));
+document.querySelectorAll('.radio-item').forEach(item=>{
+  item.addEventListener('click',function(){
+    document.querySelectorAll('.radio-item').forEach(r=>r.classList.remove('selected'));
     this.classList.add('selected');
   });
 });
-
-function diagnose() {
-  const fee = getRawValue(feeInput.value);
-  const alertBox = document.getElementById('alertBox');
-  const selectedRadio = document.querySelector('input[name="pageCount"]:checked');
-
-  if (!fee || fee <= 0) { alert('月額費用を入力してください'); return; }
-  if (fee < 6000) { alertBox.style.display = 'block'; return; }
-  if (!selectedRadio) { alert('サイトのページ数を選択してください'); return; }
-
-  alertBox.style.display = 'none';
-
-  const pageMonthly = parseInt(selectedRadio.dataset.monthly);
-  const pageRenewal = parseInt(selectedRadio.dataset.renewal);
-  const renewalChecked = document.getElementById('renewalCheck').checked;
-
-  const plan = getPlan(fee);
-  const monthSaving = fee - plan.newMonthly;
-  const yearSaving = monthSaving * 12;
-  const total = yearSaving + plan.renewalFee;
-
-  document.getElementById('totalSaving').textContent = '¥' + formatComma(total);
-  document.getElementById('monthSaving').textContent = monthSaving > 0 ? '¥' + formatComma(monthSaving) : '±¥0';
-  document.getElementById('yearSaving').textContent = yearSaving > 0 ? '¥' + formatComma(yearSaving) : '±¥0';
-  document.getElementById('beforeFee').textContent = '¥' + formatComma(fee);
-  document.getElementById('afterFee').textContent = '¥' + formatComma(plan.newMonthly);
-  document.getElementById('beforeInit').textContent = '¥' + formatComma(plan.renewalFee);
-  document.getElementById('badgeSub').textContent = '通常' + formatComma(plan.renewalFee) + '円のところ → 今なら0円でご提供';
-  document.getElementById('planNote').textContent =
-    '📋 適用プラン：月額保守 ¥' + formatComma(plan.newMonthly) +
-    '　リニューアル費 ¥' + formatComma(plan.renewalFee) + ' → ¥0';
-
-  document.getElementById('pageMonthlyCurrent').textContent = '現在 ¥' + formatComma(fee);
-  document.getElementById('pageMonthlyHint').textContent = 'ページ数目安 ¥' + formatComma(pageMonthly);
-
-  const judgeBox = document.getElementById('judgeBox');
-  if (fee > pageMonthly) {
-    judgeBox.className = 'judge-box high';
-    judgeBox.textContent = '⚠️ 現在の保守費用はページ数からみた目安より月' + formatComma(fee - pageMonthly) + '円割高です';
-  } else {
-    judgeBox.className = 'judge-box fair';
-    judgeBox.textContent = '✅ 現在の保守費用はページ数からみた目安の範囲内です';
+function launchParticles(){
+  const emojis=['💰','✨','🎉','💴','🎊','⭐','💫','🔥'];
+  for(let i=0;i<18;i++){
+    setTimeout(()=>{
+      const p=document.createElement('div');
+      p.className='particle';
+      p.textContent=emojis[Math.floor(Math.random()*emojis.length)];
+      p.style.left=Math.random()*100+'vw';
+      p.style.top=Math.random()*60+20+'vh';
+      p.style.fontSize=(20+Math.random()*20)+'px';
+      document.body.appendChild(p);
+      setTimeout(()=>p.remove(),1500);
+    },i*80);
   }
-
-  const renewalResult = document.getElementById('renewalResult');
-  if (renewalChecked) {
-    renewalResult.style.display = 'block';
-    if (pageRenewal === 0) {
-      document.getElementById('renewalFeeText').textContent = 'SPC特典により → 無料でご提供';
-      document.getElementById('renewalSubText').textContent = '初期制作費0円でリニューアルいたします';
-    } else {
-      document.getElementById('renewalFeeText').textContent = '通常 ¥' + formatComma(pageRenewal) + '〜 → SPC特典により¥0';
-      document.getElementById('renewalSubText').textContent = 'リニューアル費用が丸ごと無料になります';
-    }
-  } else {
-    renewalResult.style.display = 'none';
-  }
-
-  const checks = document.querySelectorAll('.check-item input:checked');
-  const itemsDiv = document.getElementById('checkedItems');
-  if (checks.length === 0) {
-    itemsDiv.innerHTML = '<p style="font-size:13px;color:#aaa;">保守内容が選択されていません</p>';
-  } else {
-    let html = '';
-    checks.forEach(c => {
-      html += '<div style="padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;">✅ ' + c.value + '</div>';
-    });
-    itemsDiv.innerHTML = html;
-  }
-
-  document.querySelector('.input-section').style.display = 'none';
-  document.getElementById('resultSection').style.display = 'block';
-  window.scrollTo(0, 0);
 }
-
-function reset() {
-  feeInput.value = '';
-  document.getElementById('alertBox').style.display = 'none';
-  document.querySelectorAll('input[name="pageCount"]').forEach(r => r.checked = false);
-  document.querySelectorAll('.radio-item').forEach(r => r.classList.remove('selected'));
-  document.querySelectorAll('.check-item input').forEach(c => c.checked = false);
-  document.getElementById('renewalCheck').checked = false;
-  document.querySelector('.input-section').style.display = 'block';
-  document.getElementById('resultSection').style.display = 'none';
-  window.scrollTo(0, 0);
+function animateCount(el,target){
+  const duration=1200;
+  const start=performance.now();
+  const update=(now)=>{
+    const progress=Math.min((now-start)/duration,1);
+    const eased=1-Math.pow(1-progress,3);
+    const current=Math.floor(eased*target);
+    el.textContent='¥'+formatComma(current);
+    if(progress<1)requestAnimationFrame(update);
+    else el.textContent='¥'+formatComma(target);
+  };
+  requestAnimationFrame(update);
+}
+function startDiagnose(){
+  const fee=getRaw(feeInput.value);
+  const alertBox=document.getElementById('alertBox');
+  const selectedRadio=document.querySelector('input[name="pageCount"]:checked');
+  if(!fee||fee<=0){alert('月額費用を入力してください');return;}
+  if(fee<6000){alertBox.style.display='block';return;}
+  if(!selectedRadio){alert('サイトのページ数を選択してください');return;}
+  alertBox.style.display='none';
+  const overlay=document.getElementById('loadingOverlay');
+  overlay.classList.add('show');
+  setTimeout(()=>{overlay.classList.remove('show');diagnose(fee,selectedRadio);},2000);
+}
+function diagnose(fee,selectedRadio){
+  const pageMonthly=parseInt(selectedRadio.dataset.monthly);
+  const pageRenewal=parseInt(selectedRadio.dataset.renewal);
+  const renewalChecked=document.getElementById('renewalCheck').checked;
+  const plan=getPlan(fee);
+  const monthSaving=fee-plan.newMonthly;
+  const yearSaving=monthSaving*12;
+  const total=yearSaving+plan.renewalFee;
+  document.getElementById('beforeFee').textContent='¥'+formatComma(fee);
+  document.getElementById('afterFee').textContent='¥'+formatComma(plan.newMonthly);
+  document.getElementById('beforeInit').textContent='¥'+formatComma(plan.renewalFee);
+  document.getElementById('badgeSub').textContent='通常'+formatComma(plan.renewalFee)+'円のところ → 今なら0円でご提供';
+  document.getElementById('planNote').textContent='📋 適用プラン：月額保守 ¥'+formatComma(plan.newMonthly)+'　リニューアル費 ¥'+formatComma(plan.renewalFee)+' → ¥0';
+  document.getElementById('pageMonthlyCurrent').textContent='現在 ¥'+formatComma(fee);
+  document.getElementById('pageMonthlyHint').textContent='目安 ¥'+formatComma(pageMonthly);
+  const judgeBox=document.getElementById('judgeBox');
+  if(fee>pageMonthly){judgeBox.className='judge-box high';judgeBox.textContent='⚠️ 現在の保守費用はページ数からみた目安より月'+formatComma(fee-pageMonthly)+'円割高です';}
+  else{judgeBox.className='judge-box fair';judgeBox.textContent='✅ 現在の保守費用はページ数からみた目安の範囲内です';}
+  const renewalResult=document.getElementById('renewalResult');
+  if(renewalChecked){
+    renewalResult.style.display='block';
+    if(pageRenewal===0){document.getElementById('renewalFeeText').textContent='SPC特典により → 無料でご提供';document.getElementById('renewalSubText').textContent='初期制作費0円でリニューアルいたします';}
+    else{document.getElementById('renewalFeeText').textContent='通常 ¥'+formatComma(pageRenewal)+'〜 → SPC特典により¥0';document.getElementById('renewalSubText').textContent='リニューアル費用が丸ごと無料になります';}
+  }else{renewalResult.style.display='none';}
+  const checks=document.querySelectorAll('.check-item input:checked');
+  const itemsDiv=document.getElementById('checkedItems');
+  if(checks.length===0){itemsDiv.innerHTML='<p style="font-size:13px;color:#aaa;">保守内容が選択されていません</p>';}
+  else{let html='';checks.forEach(c=>{html+='<div style="padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;">✅ '+c.value+'</div>';});itemsDiv.innerHTML=html;}
+  document.querySelector('.input-section').style.display='none';
+  document.getElementById('resultSection').style.display='block';
+  window.scrollTo(0,0);
+  const bigNum=document.getElementById('totalSaving');
+  const monthEl=document.getElementById('monthSaving');
+  const yearEl=document.getElementById('yearSaving');
+  setTimeout(()=>{bigNum.classList.add('show');animateCount(bigNum,total);},100);
+  setTimeout(()=>{document.getElementById('confettiLine').classList.add('show');launchParticles();},700);
+  setTimeout(()=>{document.getElementById('box1').classList.add('show');animateCount(monthEl,monthSaving>0?monthSaving:0);},400);
+  setTimeout(()=>{document.getElementById('box2').classList.add('show');animateCount(yearEl,yearSaving>0?yearSaving:0);},550);
+  setTimeout(()=>judgeBox.classList.add('show'),700);
+  setTimeout(()=>document.getElementById('impactCard').classList.add('show'),850);
+  if(renewalChecked)setTimeout(()=>renewalResult.classList.add('show'),1000);
+  setTimeout(()=>document.getElementById('freeBadge').classList.add('show'),1100);
+  setTimeout(()=>document.getElementById('planNote').classList.add('show'),1250);
+  setTimeout(()=>document.getElementById('checkedCard').classList.add('show'),1400);
+  setTimeout(()=>document.getElementById('btnLine').classList.add('show'),1550);
+}
+function reset(){
+  feeInput.value='';
+  document.getElementById('alertBox').style.display='none';
+  document.querySelectorAll('input[name="pageCount"]').forEach(r=>r.checked=false);
+  document.querySelectorAll('.radio-item').forEach(r=>r.classList.remove('selected'));
+  document.querySelectorAll('.check-item input').forEach(c=>c.checked=false);
+  document.getElementById('renewalCheck').checked=false;
+  ['totalSaving','confettiLine','box1','box2','judgeBox','impactCard','renewalResult','freeBadge','planNote','checkedCard','btnLine'].forEach(id=>{
+    const el=document.getElementById(id);if(el)el.classList.remove('show');
+  });
+  document.querySelector('.input-section').style.display='block';
+  document.getElementById('resultSection').style.display='none';
+  window.scrollTo(0,0);
 }
 </script>
 </body>
