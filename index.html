@@ -107,6 +107,45 @@ body {
   color: #888;
   margin-top: 6px;
 }
+.radio-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.radio-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 2px solid #e0e0e0;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.radio-item:hover {
+  border-color: #223670;
+  background: #f8f9ff;
+}
+.radio-item input[type="radio"] {
+  width: 18px;
+  height: 18px;
+  accent-color: #223670;
+  cursor: pointer;
+}
+.radio-item.selected {
+  border-color: #223670;
+  background: #f0f4ff;
+}
+.radio-item span {
+  font-size: 14px;
+  font-weight: 500;
+  flex: 1;
+}
+.radio-item .price-hint {
+  font-size: 12px;
+  color: #888;
+  font-weight: 600;
+}
 .check-list {
   display: flex;
   flex-direction: column;
@@ -135,6 +174,31 @@ body {
 .check-item span {
   font-size: 14px;
   font-weight: 500;
+}
+.renewal-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 16px;
+  border: 2px solid #D0A900;
+  border-radius: 10px;
+  cursor: pointer;
+  background: #fffdf0;
+  transition: all 0.2s;
+}
+.renewal-item:hover {
+  background: #fff8d0;
+}
+.renewal-item input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  accent-color: #D0A900;
+  cursor: pointer;
+}
+.renewal-item span {
+  font-size: 14px;
+  font-weight: 600;
+  color: #856404;
 }
 .btn-diagnose {
   width: 100%;
@@ -252,6 +316,25 @@ body {
   color: #27ae60;
   font-weight: 700;
 }
+.judge-box {
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+.judge-box.high {
+  background: #fff0f0;
+  border: 2px solid #e74c3c;
+  color: #c0392b;
+}
+.judge-box.fair {
+  background: #f0fff4;
+  border: 2px solid #27ae60;
+  color: #1e8449;
+}
 .free-badge {
   background: linear-gradient(135deg, #e74c3c, #c0392b);
   color: white;
@@ -270,6 +353,28 @@ body {
   font-weight: 700;
 }
 .free-badge .badge-sub {
+  font-size: 13px;
+  opacity: 0.9;
+  margin-top: 4px;
+}
+.renewal-result {
+  background: linear-gradient(135deg, #D0A900, #b8940a);
+  color: white;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+.renewal-result .r-label {
+  font-size: 12px;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+.renewal-result .r-main {
+  font-size: 20px;
+  font-weight: 700;
+}
+.renewal-result .r-sub {
   font-size: 13px;
   opacity: 0.9;
   margin-top: 4px;
@@ -332,7 +437,7 @@ body {
   font-size: 13px;
   color: #856404;
   line-height: 1.6;
-  margin-bottom: 16px;
+  margin-top: 10px;
   display: none;
 }
 </style>
@@ -360,7 +465,38 @@ body {
       </div>
     </div>
 <div class="card">
-  <h2>STEP 2｜現在の保守内容</h2>
+  <h2>STEP 2｜現在のサイトのページ数</h2>
+  <div class="radio-list">
+    <label class="radio-item">
+      <input type="radio" name="pageCount" value="5" data-monthly="3000" data-renewal="0">
+      <span>〜5ページ</span>
+      <span class="price-hint">目安：月3,000円</span>
+    </label>
+    <label class="radio-item">
+      <input type="radio" name="pageCount" value="10" data-monthly="5000" data-renewal="0">
+      <span>〜10ページ</span>
+      <span class="price-hint">目安：月5,000円</span>
+    </label>
+    <label class="radio-item">
+      <input type="radio" name="pageCount" value="20" data-monthly="10000" data-renewal="100000">
+      <span>〜20ページ</span>
+      <span class="price-hint">目安：月10,000円</span>
+    </label>
+    <label class="radio-item">
+      <input type="radio" name="pageCount" value="50" data-monthly="20000" data-renewal="300000">
+      <span>〜50ページ</span>
+      <span class="price-hint">目安：月20,000円</span>
+    </label>
+    <label class="radio-item">
+      <input type="radio" name="pageCount" value="99" data-monthly="30000" data-renewal="600000">
+      <span>それ以上</span>
+      <span class="price-hint">目安：月30,000円</span>
+    </label>
+  </div>
+</div>
+
+<div class="card">
+  <h2>STEP 3｜現在の保守内容</h2>
   <div class="check-list">
     <label class="check-item">
       <input type="checkbox" value="サーバー・ドメイン管理">
@@ -385,6 +521,14 @@ body {
   </div>
 </div>
 
+<div class="card">
+  <h2>STEP 4｜リニューアルのご検討</h2>
+  <label class="renewal-item">
+    <input type="checkbox" id="renewalCheck">
+    <span>🔁 サイトリニューアルも検討している</span>
+  </label>
+</div>
+
 <button class="btn-diagnose" onclick="diagnose()">✨ 削減シミュレーションを見る</button>
   </div>
   <div class="result-section" id="resultSection">
@@ -407,26 +551,40 @@ body {
   </div>
 </div>
 
+<div class="judge-box" id="judgeBox"></div>
+
 <div class="impact-card">
   <h3>📊 費用比較</h3>
   <div class="compare-row">
-    <div class="compare-label">月額保守費用</div>
+    <div class="compare-label">現在の月額保守費用</div>
     <div class="compare-before" id="beforeFee">¥0</div>
     <div class="arrow">→</div>
     <div class="compare-after" id="afterFee">¥0</div>
   </div>
   <div class="compare-row">
+    <div class="compare-label">ページ数からみた目安</div>
+    <div class="compare-before" id="pageMonthlyCurrent" style="text-decoration:none;color:#223670;"></div>
+    <div class="arrow">　</div>
+    <div class="compare-after" id="pageMonthlyHint" style="color:#223670;"></div>
+  </div>
+  <div class="compare-row">
     <div class="compare-label">初期制作費</div>
     <div class="compare-before" id="beforeInit">¥0</div>
     <div class="arrow">→</div>
-    <div class="compare-after">¥0</div>
+    <div class="compare-after">¥0（特典）</div>
   </div>
+</div>
+
+<div class="renewal-result" id="renewalResult" style="display:none;">
+  <div class="r-label">🔁 リニューアル概算費用</div>
+  <div class="r-main" id="renewalFeeText">¥0 → 今なら¥0</div>
+  <div class="r-sub" id="renewalSubText"></div>
 </div>
 
 <div class="free-badge">
   <div class="badge-label">🎁 スペシャル特典</div>
   <div class="badge-main">サイトリニューアル 初期制作費 無料</div>
-  <div class="badge-sub" id="badgeSub">通常○○万円のところ → 今なら0円でご提供</div>
+  <div class="badge-sub" id="badgeSub">通常○○円のところ → 今なら0円でご提供</div>
 </div>
 
 <div class="plan-note" id="planNote"></div>
@@ -448,19 +606,17 @@ body {
 </div>
 <script>
 const planTable = [
-  { threshold: 6000,    renewalFee: 300000,  newMonthly: 6000  },
-  { threshold: 8000,    renewalFee: 500000,  newMonthly: 8000  },
-  { threshold: 10000,   renewalFee: 600000,  newMonthly: 10000 },
-  { threshold: 15000,   renewalFee: 700000,  newMonthly: 15000 },
-  { threshold: 20000,   renewalFee: 1300000, newMonthly: 20000 },
-  { threshold: 99999999,renewalFee: 1500000, newMonthly: 20000 },
+  { threshold: 6000,     renewalFee: 300000,  newMonthly: 6000  },
+  { threshold: 8000,     renewalFee: 500000,  newMonthly: 8000  },
+  { threshold: 10000,    renewalFee: 600000,  newMonthly: 10000 },
+  { threshold: 15000,    renewalFee: 700000,  newMonthly: 15000 },
+  { threshold: 20000,    renewalFee: 1300000, newMonthly: 20000 },
+  { threshold: 99999999, renewalFee: 1500000, newMonthly: 20000 },
 ];
 
 function getPlan(fee) {
   for (let i = 0; i < planTable.length; i++) {
-    if (fee <= planTable[i].threshold) {
-      return planTable[i];
-    }
+    if (fee <= planTable[i].threshold) return planTable[i];
   }
   return planTable[planTable.length - 1];
 }
@@ -474,32 +630,33 @@ function getRawValue(str) {
 }
 
 const feeInput = document.getElementById('currentFee');
-
 feeInput.addEventListener('input', function () {
   let raw = this.value.replace(/[^0-9]/g, '');
-  if (raw === '') {
-    this.value = '';
-    return;
-  }
-  let num = parseInt(raw);
-  this.value = formatComma(num);
+  if (raw === '') { this.value = ''; return; }
+  this.value = formatComma(parseInt(raw));
+});
+
+document.querySelectorAll('.radio-item').forEach(item => {
+  item.addEventListener('click', function () {
+    document.querySelectorAll('.radio-item').forEach(r => r.classList.remove('selected'));
+    this.classList.add('selected');
+  });
 });
 
 function diagnose() {
   const fee = getRawValue(feeInput.value);
   const alertBox = document.getElementById('alertBox');
+  const selectedRadio = document.querySelector('input[name="pageCount"]:checked');
 
-  if (!fee || fee <= 0) {
-    alert('月額費用を入力してください');
-    return;
-  }
-
-  if (fee < 6000) {
-    alertBox.style.display = 'block';
-    return;
-  }
+  if (!fee || fee <= 0) { alert('月額費用を入力してください'); return; }
+  if (fee < 6000) { alertBox.style.display = 'block'; return; }
+  if (!selectedRadio) { alert('サイトのページ数を選択してください'); return; }
 
   alertBox.style.display = 'none';
+
+  const pageMonthly = parseInt(selectedRadio.dataset.monthly);
+  const pageRenewal = parseInt(selectedRadio.dataset.renewal);
+  const renewalChecked = document.getElementById('renewalCheck').checked;
 
   const plan = getPlan(fee);
   const monthSaving = fee - plan.newMonthly;
@@ -516,6 +673,32 @@ function diagnose() {
   document.getElementById('planNote').textContent =
     '📋 適用プラン：月額保守 ¥' + formatComma(plan.newMonthly) +
     '　リニューアル費 ¥' + formatComma(plan.renewalFee) + ' → ¥0';
+
+  document.getElementById('pageMonthlyCurrent').textContent = '現在 ¥' + formatComma(fee);
+  document.getElementById('pageMonthlyHint').textContent = 'ページ数目安 ¥' + formatComma(pageMonthly);
+
+  const judgeBox = document.getElementById('judgeBox');
+  if (fee > pageMonthly) {
+    judgeBox.className = 'judge-box high';
+    judgeBox.textContent = '⚠️ 現在の保守費用はページ数からみた目安より月' + formatComma(fee - pageMonthly) + '円割高です';
+  } else {
+    judgeBox.className = 'judge-box fair';
+    judgeBox.textContent = '✅ 現在の保守費用はページ数からみた目安の範囲内です';
+  }
+
+  const renewalResult = document.getElementById('renewalResult');
+  if (renewalChecked) {
+    renewalResult.style.display = 'block';
+    if (pageRenewal === 0) {
+      document.getElementById('renewalFeeText').textContent = 'SPC特典により → 無料でご提供';
+      document.getElementById('renewalSubText').textContent = '初期制作費0円でリニューアルいたします';
+    } else {
+      document.getElementById('renewalFeeText').textContent = '通常 ¥' + formatComma(pageRenewal) + '〜 → SPC特典により¥0';
+      document.getElementById('renewalSubText').textContent = 'リニューアル費用が丸ごと無料になります';
+    }
+  } else {
+    renewalResult.style.display = 'none';
+  }
 
   const checks = document.querySelectorAll('.check-item input:checked');
   const itemsDiv = document.getElementById('checkedItems');
@@ -537,7 +720,10 @@ function diagnose() {
 function reset() {
   feeInput.value = '';
   document.getElementById('alertBox').style.display = 'none';
+  document.querySelectorAll('input[name="pageCount"]').forEach(r => r.checked = false);
+  document.querySelectorAll('.radio-item').forEach(r => r.classList.remove('selected'));
   document.querySelectorAll('.check-item input').forEach(c => c.checked = false);
+  document.getElementById('renewalCheck').checked = false;
   document.querySelector('.input-section').style.display = 'block';
   document.getElementById('resultSection').style.display = 'none';
   window.scrollTo(0, 0);
